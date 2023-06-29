@@ -13,6 +13,9 @@ export const addItem = async (productData) => {
     }
 
     // Create a new Product Object
+    if (isNaN(convertPrice(productData.price))) {
+      return true;
+    }
 
     const newProduct = {
       productTitle: productData.title,
@@ -57,6 +60,10 @@ export const updateItem = async (productInfo, Product) => {
   try {
     const pastPrice = convertPrice(Product.latestPrice);
     const currentPrice = convertPrice(productInfo.price);
+
+    if (isNaN(currentPrice)) {
+      return true;
+    }
 
     if (pastPrice !== currentPrice) {
       Product.priceHistory.push({

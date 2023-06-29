@@ -17,7 +17,7 @@ try {
 
 const links = await getScrapeLinks();
 
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 20; i++) {
   await scrapePage(links[i]["url"]);
 }
 
