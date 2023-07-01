@@ -2,6 +2,7 @@ import Product from "../../models/Product.js";
 import getDate from "../../utils/getDate.js";
 import Store from "../../models/Store.js";
 import convertPrice from "../../utils/convertPrice.js";
+import { logger } from "../../utils/logger.js";
 
 // Add a new Item to the DB..
 
@@ -34,7 +35,7 @@ export const addItem = async (productData) => {
     await Product.create(newProduct);
     return true;
   } catch (err) {
-    console.log(err.message);
+    logger.err(`Something went wrong while adding item. Error: ${err.message}`);
     return false;
   }
 };
@@ -50,7 +51,7 @@ export const getScrapeLinks = async () => {
 
     return store.links;
   } catch (err) {
-    console.log(err.message);
+    logger.err(`Something went wrong while adding item. Error: ${err.message}`);
   }
 };
 
@@ -75,7 +76,7 @@ export const updateItem = async (productInfo, Product) => {
     }
     return true;
   } catch (err) {
-    console.log(err);
+    logger.err(`Something went wrong while adding item. Error: ${err.message}`);
     return false;
   }
 };
@@ -91,7 +92,7 @@ export const handleItems = async (productInfo) => {
 
     return await updateItem(productInfo, product);
   } catch (err) {
-    console.log(err.message);
+    logger.err(`Something went wrong while adding item. Error: ${err.message}`);
     return false;
   }
 };

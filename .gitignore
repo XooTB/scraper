@@ -7,3 +7,5 @@ apify_storage
 crawlee_storage
 storage
 .env
+combined.log
+error.log

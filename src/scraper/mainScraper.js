@@ -1,5 +1,8 @@
 import { RequestQueue, CheerioCrawler, Dataset, enqueueLinks } from "crawlee";
 import { addItem, handleItems } from "./controllers/ST_DB.controller.js";
+import getDate from "../utils/getDate.js";
+import { logger } from "../utils/logger.js";
+import getDateTime from "../utils/getDateTime.js";
 
 export async function scrapePage(url) {
   // Initialize the Request Queue.
@@ -52,6 +55,10 @@ export async function scrapePage(url) {
 
   await crawler
     .run()
-    .finally(() => console.log("Crawling Done!"))
-    .catch((err) => console.log(err));
+    .finally(() => logger.info(`Craw done. Time: ${getDateTime()}`))
+    .catch((err) =>
+      logger.error(
+        `Something went wrong with the scraper! Error Message: ${err.message}`
+      )
+    );
 }

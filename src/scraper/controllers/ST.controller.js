@@ -1,5 +1,6 @@
 import Store from "../../models/Store.js";
 import containsLink from "../../utils/containsLink.js";
+import { logger } from "../../utils/logger.js";
 
 export const addLink = async (links) => {
   const newStore = {
@@ -26,7 +27,9 @@ export const addLink = async (links) => {
     await store.save();
     return true;
   } catch (err) {
-    console.log(err);
+    logger.error(
+      `Something went wrong while adding Links. Error: ${err.message}`
+    );
     return false;
   }
 };
