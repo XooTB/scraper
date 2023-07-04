@@ -13,7 +13,8 @@
   },
   "scripts": {
     "start": "node src/main.js",
-    "dev": "node src/main.js"
+    "dev": "node src/main.js",
+    "cron": "node src/cron-schedular.js"
   },
   "author": "It's not you it's me",
   "license": "ISC"

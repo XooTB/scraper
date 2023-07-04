@@ -1,12 +1,10 @@
 import mongoose from "mongoose";
-import {
-  addItem,
-  getScrapeLinks,
-} from "./scraper/controllers/ST_DB.controller.js";
-import { linkScraper } from "./scraper/linkScraper.js";
+import { getScrapeLinks } from "./scraper/controllers/ST_DB.controller.js";
 import { scrapePage } from "./scraper/mainScraper.js";
 import connectDB from "./utils/connect.js";
-import containsLink from "./utils/containsLink.js";
+import { logger } from "./utils/logger.js";
+import getDateTime from "./utils/getDateTime.js";
+
 import "dotenv/config";
 
 try {
@@ -16,9 +14,11 @@ try {
 }
 
 const links = await getScrapeLinks();
+logger.info(`Crawl Started! Time: ${getDateTime()}`);
 
 for (let i = 0; i < 10; i++) {
   await scrapePage(links[i]["url"]);
 }
+logger.info(`Crawl Finished! Time: ${getDateTime()}`);
 
 mongoose.connection.close();
