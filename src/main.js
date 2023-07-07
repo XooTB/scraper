@@ -4,7 +4,6 @@ import { scrapePage } from "./scraper/mainScraper.js";
 import connectDB from "./utils/connect.js";
 import { logger } from "./utils/logger.js";
 import getDateTime from "./utils/getDateTime.js";
-
 import "dotenv/config";
 
 try {

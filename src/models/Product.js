@@ -19,6 +19,14 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
+  historicalLow: {
+    type: String,
+    required: false,
+  },
+  historicalHigh: {
+    type: String,
+    required: false,
+  },
   priceHistory: [
     {
       date: {
