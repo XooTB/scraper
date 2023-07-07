@@ -7,7 +7,7 @@ import getDateTime from "./utils/getDateTime.js";
 import "dotenv/config";
 
 try {
-  connectDB(process.env.MONGODB_URL);
+  connectDB("");
 } catch (err) {
   console.log(err);
 }
@@ -15,7 +15,7 @@ try {
 const links = await getScrapeLinks();
 logger.info(`Crawl Started! Time: ${getDateTime()}`);
 
-for (let i = 0; i < 10; i++) {
+for (let i in links) {
   await scrapePage(links[i]["url"]);
 }
 logger.info(`Crawl Finished! Time: ${getDateTime()}`);
