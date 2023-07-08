@@ -55,7 +55,7 @@ export async function scrapePage(url) {
 
   await crawler
     .run()
-    .finally(() => logger.info(`Craw done. Time: ${getDateTime()}`))
+    .finally(() => {})
     .catch((err) =>
       logger.error(
         `Something went wrong with the scraper! Error Message: ${err.message}`

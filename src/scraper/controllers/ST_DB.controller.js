@@ -35,7 +35,9 @@ export const addItem = async (productData) => {
     await Product.create(newProduct);
     return true;
   } catch (err) {
-    logger.err(`Something went wrong while adding item. Error: ${err.message}`);
+    logger.error(
+      `Something went wrong while adding item. Error: ${err.message}`
+    );
     return false;
   }
 };
@@ -51,7 +53,9 @@ export const getScrapeLinks = async () => {
 
     return store.links;
   } catch (err) {
-    logger.err(`Something went wrong while adding item. Error: ${err.message}`);
+    logger.error(
+      `Something went wrong while adding item. Error: ${err.message}`
+    );
   }
 };
 
@@ -61,6 +65,8 @@ export const updateItem = async (productInfo, Product) => {
   try {
     const pastPrice = convertPrice(Product.latestPrice);
     const currentPrice = convertPrice(productInfo.price);
+    const historicalHigh = convertPrice(Product.historicalHigh);
+    const historicalLow = convertPrice(Product.historicalLow);
 
     if (isNaN(currentPrice)) {
       return true;
@@ -72,11 +78,21 @@ export const updateItem = async (productInfo, Product) => {
         price: currentPrice,
       });
       Product.latestPrice = currentPrice;
+
+      if (currentPrice > historicalHigh) {
+        Product.historicalHigh = currentPrice;
+      } else if (currentPrice < historicalLow) {
+        Product.historicalLow = currentPrice;
+      }
+
       await Product.save();
     }
+
     return true;
   } catch (err) {
-    logger.err(`Something went wrong while adding item. Error: ${err.message}`);
+    logger.error(
+      `Something went wrong while adding item. Error: ${err.message}`
+    );
     return false;
   }
 };
@@ -92,7 +108,9 @@ export const handleItems = async (productInfo) => {
 
     return await updateItem(productInfo, product);
   } catch (err) {
-    logger.err(`Something went wrong while adding item. Error: ${err.message}`);
+    logger.error(
+      `Something went wrong while adding item. Error: ${err.message}`
+    );
     return false;
   }
 };
