@@ -21,10 +21,10 @@ export async function scrapePage(url) {
       const data = [];
 
       // Extract the Product Data from the page.
-      $(".p-item-details").each((i, el) => {
+      $(".p-item").each((i, el) => {
         data.push({
           title: $(el).find(".p-item-name a").text(),
-          image: $(".p-item-img a img").attr("src"),
+          image: $(el).find(".p-item-img a img").attr("src"),
           price: $(el).find(".p-item-price>span").first().text(),
         });
       });
