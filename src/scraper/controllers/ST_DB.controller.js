@@ -13,8 +13,10 @@ export const addItem = async (productData) => {
       throw Error("Store information not found!");
     }
 
+    const productPrice = convertPrice(productData.price);
+
     // Create a new Product Object
-    if (isNaN(convertPrice(productData.price))) {
+    if (isNaN(productPrice)) {
       return true;
     }
 
@@ -22,13 +24,15 @@ export const addItem = async (productData) => {
       productTitle: productData.title,
       store: "StarTech",
       image: productData.image,
-      latestPrice: convertPrice(productData.price),
+      latestPrice: productPrice,
       priceHistory: [
         {
           date: getDate(),
-          price: convertPrice(productData.price),
+          price: productPrice,
         },
       ],
+      historicalHigh: productPrice,
+      historicalLow: productPrice,
     };
 
     // Add the New Product information to the Database.
@@ -91,7 +95,7 @@ export const updateItem = async (productInfo, Product) => {
     return true;
   } catch (err) {
     logger.error(
-      `Something went wrong while adding item. Error: ${err.message}`
+      `Something went wrong while adding item. Error: ${err.message}. ProductTitle: ${Product.productTitle}`
     );
     return false;
   }
