@@ -1,8 +1,6 @@
-import { RequestQueue, CheerioCrawler, Dataset, enqueueLinks } from "crawlee";
-import { addItem, handleItems } from "./controllers/ST_DB.controller.js";
-import getDate from "../utils/getDate.js";
+import { RequestQueue, CheerioCrawler, enqueueLinks } from "crawlee";
+import { handleItems } from "./controllers/ST_DB.controller.js";
 import { logger } from "../utils/logger.js";
-import getDateTime from "../utils/getDateTime.js";
 
 export async function scrapePage(url) {
   // Initialize the Request Queue.
