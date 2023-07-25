@@ -1,15 +1,17 @@
-import Store from "../../models/Store.js";
 import containsLink from "../../utils/containsLink.js";
+import Store from "../../models/Store.js";
 import { logger } from "../../utils/logger.js";
 
-export const addLink = async (links) => {
+// TechLand.com.bd
+
+export const addTechLandLink = async (links) => {
   const newStore = {
-    storeName: "StarTech",
-    websiteUrl: "https://www.startech.com.bd/",
+    storeName: "TechLand",
+    websiteUrl: "https://www.techlandbd.com/",
   };
 
   try {
-    const store = await Store.findOne({ storeName: "StarTech" });
+    const store = await Store.findOne({ storeName: "TechLand" });
     if (!store) {
       await Store.create({
         ...newStore,
@@ -28,7 +30,7 @@ export const addLink = async (links) => {
     return true;
   } catch (err) {
     logger.error(
-      `Something went wrong while adding Links. Error: ${err.message}`
+      `Something went wrong while adding links for the store: TechLand, Error: ${err.message}`
     );
     return false;
   }

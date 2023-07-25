@@ -1,33 +1,22 @@
-import { RequestQueue, CheerioCrawler, Dataset, enqueueLinks } from "crawlee";
-import { addLink } from "./controllers/ST.controller.js";
+import { starTechLinkScraper } from "./link/starTech.js";
+import { techLandLinkScraper } from "./link/TechLand.js";
+import connectDB from "../utils/connect.js";
+import "dotenv/config";
+import mongoose from "mongoose";
+import { logger } from "../utils/logger.js";
 
-export async function linkScraper(url) {
-  // Initialize the Request Queue.
-  const requestQueue = await RequestQueue.open();
-
-  //   Add the supplied URL to the the Request Queue.
-  await requestQueue.addRequest({
-    url: url,
-  });
-
-  // Initialize a new Crawler and Crawl the Request Queue.
-  const crawler = new CheerioCrawler({
-    requestQueue,
-    async requestHandler({ $, request }) {
-      // Data Array.
-      const data = [];
-
-      // Extract the Product Data from the page.
-      $(".drop-menu-1>li").each((i, el) => {
-        data.push({
-          category: $(el).find("a").first().text(),
-          url: $(el).find("a").attr("href"),
-        });
-      });
-
-      await addLink(data);
-    },
-  });
-
-  await crawler.run().catch((err) => console.log(err));
+try {
+  connectDB(process.env.MONGODB_URL);
+} catch (err) {
+  console.log(err);
 }
+
+logger.info("Started Scraping Startech for links.");
+await starTechLinkScraper("https://www.startech.com.bd/");
+logger.info("Finished Scraping Startech for links.");
+
+logger.info("Started Scraping TechLand for links.");
+await techLandLinkScraper("https://www.techlandbd.com/");
+logger.info("Finished Scraping TechLand for links.");
+
+mongoose.connection.close();

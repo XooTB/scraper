@@ -7,7 +7,7 @@ import getDateTime from "./utils/getDateTime.js";
 import "dotenv/config";
 
 try {
-  connectDB("");
+  connectDB(process.env.MONGODB_URL);
 } catch (err) {
   console.log(err);
 }
