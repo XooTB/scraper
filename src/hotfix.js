@@ -15,5 +15,3 @@ async function hotfix() {
 }
 
 await hotfix();
-
-mongoose.connection.close();
