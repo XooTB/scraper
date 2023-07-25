@@ -27,6 +27,10 @@ const productSchema = new Schema({
     type: String,
     required: false,
   },
+  productLink: {
+    type: String,
+    required: true,
+  },
   priceHistory: [
     {
       date: {

@@ -35,3 +35,32 @@ export const addTechLandLink = async (links) => {
     return false;
   }
 };
+
+export const getTLLinks = async () => {
+  try {
+    const store = await Store.findOne({ storeName: "TechLand" });
+
+    if (!store) {
+      throw Error("No store named TechLand found.");
+    }
+
+    return store.links;
+  } catch (err) {
+    logger.error(
+      `Something went wrong while getting scraping Links from Techland. Message: ${err.message}`
+    );
+  }
+};
+
+export const handleTLProducts = async (productInfo) => {
+  try {
+    const product = await Product.findOne({ productTitle: productInfo.title });
+    if (!product) {
+      return await addItem(productInfo);
+    }
+  } catch (err) {
+    logger.error(
+      `Something went wrong in HandleProducts. Error: ${err.message}`
+    );
+  }
+};

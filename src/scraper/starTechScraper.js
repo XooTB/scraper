@@ -1,10 +1,10 @@
 import { RequestQueue, CheerioCrawler, Dataset, enqueueLinks } from "crawlee";
-import { addItem, handleItems } from "./controllers/ST_DB.controller.js";
+import { handleItems } from "./controllers/common.controller.js";
 import getDate from "../utils/getDate.js";
 import { logger } from "../utils/logger.js";
 import getDateTime from "../utils/getDateTime.js";
 
-export async function scrapePage(url) {
+export async function stScraper(url) {
   // Initialize the Request Queue.
   const requestQueue = await RequestQueue.open();
 
@@ -26,6 +26,8 @@ export async function scrapePage(url) {
           title: $(el).find(".p-item-name a").text(),
           image: $(el).find(".p-item-img a img").attr("src"),
           price: $(el).find(".p-item-price>span").first().text(),
+          productLink: $(el).find(".p-item-name a").attr("href"),
+          storeName: "StarTech",
         });
       });
 

@@ -1,8 +1,6 @@
 import Product from "./models/Product.js";
-import convertPrice from "./utils/convertPrice.js";
 import connectDB from "./utils/connect.js";
-import { scrapePage } from "./scraper/mainScraper.js";
-import { getScrapeLinks } from "./scraper/controllers/ST_DB.controller.js";
+import mongoose from "mongoose";
 
 import "dotenv/config";
 
@@ -12,7 +10,9 @@ try {
   console.log(err);
 }
 
-async function hotfix() {}
+async function hotfix() {
+  await Product.deleteMany({ store: "TechLand" });
+}
 
 await hotfix();
 

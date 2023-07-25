@@ -1,14 +1,15 @@
+import Store from "../../models/Store.js";
+import containsLink from "../../utils/containsLink.js";
 import Product from "../../models/Product.js";
 import getDate from "../../utils/getDate.js";
-import Store from "../../models/Store.js";
 import convertPrice from "../../utils/convertPrice.js";
 import { logger } from "../../utils/logger.js";
 
-// Add a new Item to the DB..
+// Add a new Product to the DB.
 
-export const addItem = async (productData) => {
+export const addProduct = async (productData) => {
   try {
-    const store = await Store.findOne({ storeName: "StarTech" });
+    const store = await Store.findOne({ storeName: productData.storeName });
     if (!store) {
       throw Error("Store information not found!");
     }
@@ -22,8 +23,9 @@ export const addItem = async (productData) => {
 
     const newProduct = {
       productTitle: productData.title,
-      store: "StarTech",
+      store: productData.storeName,
       image: productData.image,
+      productLink: productData.productLink,
       latestPrice: productPrice,
       priceHistory: [
         {
@@ -46,31 +48,15 @@ export const addItem = async (productData) => {
   }
 };
 
-// Get the Scraped Links from the LinkDB.
-
-export const getScrapeLinks = async () => {
-  try {
-    const store = await Store.findOne({ storeName: "StarTech" });
-    if (!store) {
-      throw Error("Store information not found!");
-    }
-
-    return store.links;
-  } catch (err) {
-    logger.error(
-      `Something went wrong while adding item. Error: ${err.message}`
-    );
-  }
-};
-
 // Check the price and Update the Item.
 
-export const updateItem = async (productInfo, Product) => {
+export const updateProduct = async (productInfo, Product) => {
   try {
     const pastPrice = convertPrice(Product.latestPrice);
     const currentPrice = convertPrice(productInfo.price);
     const historicalHigh = convertPrice(Product.historicalHigh);
     const historicalLow = convertPrice(Product.historicalLow);
+    const productLink = productInfo.productLink;
 
     if (isNaN(currentPrice)) {
       return true;
@@ -88,10 +74,13 @@ export const updateItem = async (productInfo, Product) => {
       } else if (currentPrice < historicalLow) {
         Product.historicalLow = currentPrice;
       }
-
-      await Product.save();
     }
 
+    if (Product.productLink !== productLink) {
+      Product.productLink = productLink;
+    }
+
+    await Product.save();
     return true;
   } catch (err) {
     logger.error(
@@ -106,11 +95,11 @@ export const updateItem = async (productInfo, Product) => {
 export const handleItems = async (productInfo) => {
   try {
     const product = await Product.findOne({ productTitle: productInfo.title });
-    if (!product) {
-      return await addItem(productInfo);
+    if (!product || product.store !== productInfo.storeName) {
+      return await addProduct(productInfo);
     }
 
-    return await updateItem(productInfo, product);
+    return await updateProduct(productInfo, product);
   } catch (err) {
     logger.error(
       `Something went wrong while adding item. Error: ${err.message}`
