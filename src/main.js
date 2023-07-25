@@ -23,10 +23,10 @@ const techLandLinks = await getTLLinks();
 
 logger.info(`Crawl Started! Time: ${getDateTime()}`);
 
-// for (let i = 0; i < 2; i++) {
-//   await stScraper(starTechLinks[i]["url"]);
-// }
-// logger.info(`Crawl Finished. Store: StarTech, Time: ${getDateTime()}`);
+for (let i = 0; i < 2; i++) {
+  await stScraper(starTechLinks[i]["url"]);
+}
+logger.info(`Crawl Finished. Store: StarTech, Time: ${getDateTime()}`);
 
 for (let i = 0; i < 1; i++) {
   await tlScraper(`${techLandLinks[i]["url"]}?fq=1`);
