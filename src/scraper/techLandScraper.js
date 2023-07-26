@@ -3,6 +3,7 @@ import getDate from "../utils/getDate.js";
 import { logger } from "../utils/logger.js";
 import getDateTime from "../utils/getDateTime.js";
 import { handleItems } from "./controllers/common.controller.js";
+import { KeyValueStore } from "crawlee";
 
 export async function tlScraper(url) {
   // Initialize the Request Queue.
@@ -36,11 +37,12 @@ export async function tlScraper(url) {
 
       linkArray.push($(".pagination>li>.next").attr("href"));
 
-      // Add the Links to the request Queue.
       await enqueueLinks({
         urls: linkArray,
         requestQueue,
       });
+
+      // Add the Links to the request Queue.
 
       for (let i in data) {
         if (await handleItems(data[i])) {

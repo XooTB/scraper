@@ -16,6 +16,7 @@ export async function stScraper(url) {
   // Initialize a new Crawler and Crawl the Request Queue.
   const crawler = new CheerioCrawler({
     requestQueue,
+    navigationTimeoutSecs: 1,
     async requestHandler({ $, request }) {
       // Data Array.
       const data = [];

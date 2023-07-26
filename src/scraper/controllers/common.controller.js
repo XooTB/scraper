@@ -94,12 +94,15 @@ export const updateProduct = async (productInfo, Product) => {
 
 export const handleItems = async (productInfo) => {
   try {
-    const product = await Product.findOne({ productTitle: productInfo.title });
-    if (!product || product.store !== productInfo.storeName) {
+    const product = await Product.findOne({
+      productTitle: productInfo.title,
+      store: productInfo.storeName,
+    });
+    if (!product) {
       return await addProduct(productInfo);
+    } else if (product) {
+      return await updateProduct(productInfo, product);
     }
-
-    return await updateProduct(productInfo, product);
   } catch (err) {
     logger.error(
       `Something went wrong while adding item. Error: ${err.message}`
