@@ -12,7 +12,7 @@ import { getTLLinks } from "./scraper/controllers/techLand.controller.js";
 import { tlScraper } from "./scraper/techLandScraper.js";
 
 try {
-  connectDB(process.env.MONGODB_URL);
+  connectDB("");
 } catch (err) {
   console.log(err);
 }
@@ -23,12 +23,12 @@ const techLandLinks = await getTLLinks();
 
 logger.info(`Crawl Started! Time: ${getDateTime()}`);
 
-for (let i = 0; i < 2; i++) {
+for (let i in starTechLinks) {
   await stScraper(starTechLinks[i]["url"]);
 }
 logger.info(`Crawl Finished. Store: StarTech, Time: ${getDateTime()}`);
 
-for (let i = 0; i < 1; i++) {
+for (let i in techLandLinks) {
   await tlScraper(`${techLandLinks[i]["url"]}?fq=1`);
 }
 logger.info(`Crawl Finished. Store: TechLand, Time: ${getDateTime()}`);
