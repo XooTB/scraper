@@ -9,6 +9,7 @@
     "luxon": "^3.3.0",
     "mongoose": "^7.2.4",
     "playwright": "*",
+    "validator": "^13.11.0",
     "winston": "^3.9.0"
   },
   "scripts": {
