@@ -97,6 +97,7 @@ export const handleItems = async (productInfo) => {
     const product = await Product.findOne({
       productTitle: productInfo.title,
       store: productInfo.storeName,
+      productLink: productInfo.productLink,
     });
     if (!product) {
       return await addProduct(productInfo);
