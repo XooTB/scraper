@@ -39,3 +39,18 @@ export const addRyansLink = async (links) => {
     return false;
   }
 };
+
+export const getRyansLink = async () => {
+  try {
+    const store = await Store.findOne({ storeName: "Ryans" });
+    if (!store) {
+      throw Error("No store named Ryans Found.");
+    }
+
+    return store.links;
+  } catch (err) {
+    logger.error(
+      `Something went wrong while adding Store. Error: ${err.message}`
+    );
+  }
+};

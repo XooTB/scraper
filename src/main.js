@@ -6,13 +6,15 @@ import getDateTime from "./utils/getDateTime.js";
 import "dotenv/config";
 
 // Other Imports
-import { getSTLinks } from "./scraper/controllers/starTech.controller.js";
 import { stScraper } from "./scraper/starTechScraper.js";
-import { getTLLinks } from "./scraper/controllers/techLand.controller.js";
 import { tlScraper } from "./scraper/techLandScraper.js";
+import { ryansScraper } from "./scraper/ryansScraper.js";
+import { getTLLinks } from "./scraper/controllers/techLand.controller.js";
+import { getSTLinks } from "./scraper/controllers/starTech.controller.js";
+import { getRyansLink } from "./scraper/controllers/ryans.controller.js";
 
 try {
-  connectDB("");
+  connectDB(process.env.MONGODB_URL);
 } catch (err) {
   console.log(err);
 }
@@ -20,19 +22,24 @@ try {
 // Get All the scraping Links from DB.
 const starTechLinks = await getSTLinks();
 const techLandLinks = await getTLLinks();
+const ryansLinks = await getRyansLink();
 
-logger.info(`Crawl Started! Time: ${getDateTime()}`);
+// logger.info(`Crawl Started! Time: ${getDateTime()}`);
 
-for (let i in starTechLinks) {
-  await stScraper(starTechLinks[i]["url"]);
+// for (let i in starTechLinks) {
+//   await stScraper(starTechLinks[i]["url"]);
+// }
+// logger.info(`Crawl Finished. Store: StarTech, Time: ${getDateTime()}`);
+
+// for (let i in techLandLinks) {
+//   await tlScraper(`${techLandLinks[i]["url"]}?fq=1`);
+// }
+// logger.info(`Crawl Finished. Store: TechLand, Time: ${getDateTime()}`);
+
+// logger.info(`Crawl Complete! Time: ${getDateTime()}`);
+
+for (let i = 0; i < 1; ++i) {
+  await ryansScraper(ryansLinks[i]["url"]);
 }
-logger.info(`Crawl Finished. Store: StarTech, Time: ${getDateTime()}`);
-
-for (let i in techLandLinks) {
-  await tlScraper(`${techLandLinks[i]["url"]}?fq=1`);
-}
-logger.info(`Crawl Finished. Store: TechLand, Time: ${getDateTime()}`);
-
-logger.info(`Crawl Complete! Time: ${getDateTime()}`);
 
 mongoose.connection.close();
