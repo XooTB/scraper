@@ -14,7 +14,7 @@ import { getSTLinks } from "./scraper/controllers/starTech.controller.js";
 import { getRyansLink } from "./scraper/controllers/ryans.controller.js";
 
 try {
-  connectDB(process.env.MONGODB_URL);
+  connectDB("");
 } catch (err) {
   console.log(err);
 }
