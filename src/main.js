@@ -16,7 +16,7 @@ import { getRyansLink } from "./scraper/controllers/ryans.controller.js";
 import { getSlLinks } from "./scraper/controllers/skyLand.controller.js";
 
 try {
-  connectDB(process.env.MONGODB_URL);
+  connectDB("");
 } catch (err) {
   console.log(err);
 }
