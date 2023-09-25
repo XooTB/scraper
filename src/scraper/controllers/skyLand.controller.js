@@ -33,3 +33,18 @@ export const addSkylandLinks = async (links) => {
     return false;
   }
 };
+
+export const getSlLinks = async () => {
+  try {
+    const store = await Store.findOne({ storeName: "SkyLand" });
+    if (!store) {
+      throw Error("No store named StarTech Found.");
+    }
+
+    return store.links;
+  } catch (err) {
+    logger.error(
+      `Something went wrong while adding item. Error: ${err.message}`
+    );
+  }
+};
