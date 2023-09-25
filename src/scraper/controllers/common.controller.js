@@ -17,7 +17,7 @@ export const addProduct = async (productData) => {
     const productPrice = convertPrice(productData.price);
 
     // Create a new Product Object
-    if (isNaN(productPrice)) {
+    if (isNaN(productPrice) || !productPrice) {
       return true;
     }
 
@@ -58,7 +58,7 @@ export const updateProduct = async (productInfo, Product) => {
     const historicalLow = convertPrice(Product.historicalLow);
     const productLink = productInfo.productLink;
 
-    if (isNaN(currentPrice)) {
+    if (isNaN(currentPrice) || !currentPrice) {
       return true;
     }
 
