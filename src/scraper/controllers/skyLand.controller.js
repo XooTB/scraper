@@ -2,14 +2,14 @@ import Store from "../../models/Store.js";
 import containsLink from "../../utils/containsLink.js";
 import { logger } from "../../utils/logger.js";
 
-export const addStarTechLink = async (links) => {
+export const addSkylandLinks = async (links) => {
   const newStore = {
-    storeName: "StarTech",
-    websiteUrl: "https://www.startech.com.bd/",
+    storeName: "SkyLand",
+    websiteUrl: "https://www.skyland.com.bd/",
   };
 
   try {
-    const store = await Store.findOne({ storeName: "StarTech" });
+    const store = await Store.findOne({ storeName: "SkyLand" });
     if (!store) {
       await Store.create({
         ...newStore,
@@ -31,22 +31,5 @@ export const addStarTechLink = async (links) => {
       `Something went wrong while adding Links. Error: ${err.message}`
     );
     return false;
-  }
-};
-
-// Get the Scraped Links from the LinkDB.
-
-export const getSTLinks = async () => {
-  try {
-    const store = await Store.findOne({ storeName: "StarTech" });
-    if (!store) {
-      throw Error("No store named StarTech Found.");
-    }
-
-    return store.links;
-  } catch (err) {
-    logger.error(
-      `Something went wrong while adding item. Error: ${err.message}`
-    );
   }
 };

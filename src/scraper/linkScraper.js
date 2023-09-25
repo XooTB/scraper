@@ -5,6 +5,7 @@ import { logger } from "../utils/logger.js";
 import { starTechLinkScraper } from "./link/starTech.js";
 import { techLandLinkScraper } from "./link/TechLand.js";
 import { ryansLinkScraper } from "./link/ryans.js";
+import { skyLandLinkScraper } from "./link/skyland.js";
 
 try {
   connectDB(process.env.MONGODB_URL);
@@ -23,5 +24,9 @@ logger.info("Finished Scraping TechLand for links.");
 logger.info("Started Scraping Ryans for links.");
 await ryansLinkScraper("https://www.ryanscomputers.com/");
 logger.info("Finished Scraping Ryans for links.");
+
+logger.info("Started Scraping SkyLand for links.");
+await skyLandLinkScraper("https://www.skyland.com.bd/");
+logger.info("Finished Scraping SkyLand for links.");
 
 mongoose.connection.close();
