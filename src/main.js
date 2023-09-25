@@ -44,7 +44,7 @@ logger.info(`Crawl Finished. Store: TechLand, Time: ${getDateTime()}`);
 logger.info(`Crawl Complete! Time: ${getDateTime()}`);
 
 // Scraping Ryans
-for (let i = 0; i < 1; ++i) {
+for (let i in ryansLinks) {
   await ryansScraper(`${ryansLinks[i]["url"]}?osp=1`);
 }
 
