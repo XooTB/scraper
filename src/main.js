@@ -46,7 +46,7 @@ logger.info(`Crawl Complete! Time: ${getDateTime()}`);
 // Scraping Ryans
 for (let i = 0; i < 1; ++i) {
   await ryansScraper(`${ryansLinks[i]["url"]}?osp=1`);
-// }
+}
 
 // Scraping SkyLand
 for (let i in skyLandLinks) {
