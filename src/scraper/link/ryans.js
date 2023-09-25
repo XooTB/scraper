@@ -1,5 +1,6 @@
 import { RequestQueue, CheerioCrawler, Dataset, enqueueLinks } from "crawlee";
 import { addRyansLink } from "../controllers/ryans.controller.js";
+import { linkCleaner } from "../../utils/linkCleaner.js";
 
 export const ryansLinkScraper = async (url) => {
   // Initialize the Request Queue.
@@ -25,7 +26,7 @@ export const ryansLinkScraper = async (url) => {
         });
       });
 
-      await addRyansLink(data);
+      await addRyansLink(linkCleaner(data));
     },
   });
 
